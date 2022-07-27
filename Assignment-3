@@ -1,0 +1,37 @@
+from email.mime import base
+import json
+from urllib import response
+import requests
+import urllib.parse
+import urllib.request
+import logging
+
+
+def getUrlPostPhoto(posts):
+    for post in posts:
+        print(post['photo-url-1280'])
+
+def getBlogAndPostDetail():
+    tumblerName = input("Enter the Tumblr blog name:")
+    start  = int(input("Enter the start value:"))
+    end = int(input("Enter the end value:"))
+    range = end - start
+    base_url = "https://"+tumblerName+".tumblr.com/api/read/json?type=photo&num="+str(range)+"&start="+str(start);
+    
+    initialResponse = requests.get(base_url)
+    response = initialResponse.text
+    
+    
+    #Converting to json
+    data=json.loads(((response).split("var tumblr_api_read = "))[1][:-2])
+
+    #getting blog info
+    print("Title =",data['tumblelog']['title'])
+    print("Name =",data['tumblelog']['name'])
+    print("Description =",data['tumblelog']['description'])
+    print("Posts Total =",data['posts-total'])
+
+    #getting photos URL
+    getUrlPostPhoto(data['posts'])
+
+getBlogAndPostDetail()

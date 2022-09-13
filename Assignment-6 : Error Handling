@@ -1,0 +1,94 @@
+public class ATM {
+
+    private String message;
+
+    public ATM(String m) {
+        if (m == null || m.trim().equals(""))
+        throw new IllegalArgumentException("ATM name cannot be empty");
+        else {
+            message = m;
+            System.out.println("Name is   " + message);
+        }
+    }
+
+    public void withdraw(Card c, double amount) throws NotEnoughMoneyInAccountException {
+        double bal = c.getBalance();
+
+        System.out.println(bal);
+
+        if (c == null)
+        throw new IllegalArgumentException("card cannot be null");
+        if (amount < 0)
+        throw new IllegalArgumentException("please enter amount");
+        if (bal > amount)
+        throw new NotEnoughMoneyInAccountException("money in account is less");
+        else {
+            bal = bal - amount;
+            c.setBalance(bal);
+            System.out.println(bal);
+        }
+    }
+
+    public void deposit(Card c, double amount) {
+        double bal = c.getBalance();
+
+        if (amount == 0)
+        throw new IllegalArgumentException("Please enter amount to deposit");
+        bal = bal + amount;
+        System.out.println(bal);
+    }
+}
+
+
+public class Card {
+    private double balance;
+    private String owner;
+    public double getBalance() {
+        return balance;
+    }
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+    public String getOwner() {
+        return owner;
+    }
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+}
+
+public class NotEnoughMoneyInAccountException extends Exception
+{
+    public NotEnoughMoneyInAccountException(String m)
+    {
+        super(m);
+    }
+}
+
+public class TestATM {
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        try
+        {
+            System.out.println("Starting");
+            Card c1 = new Card();
+            c1.setOwner("Shweta");
+            c1.setBalance(500);
+
+            System.out.println(c1.getOwner());
+
+            ATM atm = new ATM("SBI");
+            atm.withdraw(c1, 200);
+            atm.deposit(c1, 200);
+        }
+        catch (NotEnoughMoneyInAccountException e) {
+            // TODO Auto-generated catch block
+            e.getMessage();
+        }
+
+        catch(Exception e)
+        {
+            e.getMessage();
+        }
+    }
+}

@@ -1,33 +1,48 @@
 Assignment 1 : The below program is to guess the correct number between 1 to 100
 
-def numberInRange(number):
+def number_guessing_game():
     if number.isdigit() and 1<= int(number) <=100:
         return True
     else:
         return False
-    
-def main():
-    randomNumber=random.randint(1,100)
-    gussedNumber=False
-    inputNumber = input("Guess a number between 1 and 100:")
-    numberOfAttempt=0
-    while not gussedNumber:
-        if not numberInRange(inputNumber):
-            inputNumber = input("I wont count this one Please enter a number between 1 to 100")
-            continue
-        else:
-            numberOfAttempt+=1
-            inputNumber = int(inputNumber)
-
-        if inputNumber < randomNumber:
-            inputNumber = input("Too low. Guess again")
-        elif inputNumber > randomNumber:
-            inputNumber = input("Too High. Guess again")
-        else:
-            print("You guessed it in" , numberOfAttempt , "guesses!")
-            gussedNumber = True
-
-main()
+		
+	def GetRandomNumber():
+		return random.randint(1,100)
+		
+	def GuessTheNumber(DisplayText):
+		InputNmber = input(DisplayText)
+		return InputNmber
+		
+	def isGuessed(InputNmber,RandomNumber):
+		if(InputNumber>RandomNumber):
+			print("Guessed number is very high")
+			return false
+		if(InputNumber<RandomNumber):
+			print("Guessed number is very low")
+			return false
+		else:
+			print("Guessed number is Correct")
+			return true
+			
+	def isGuessingNumber():
+		RandomNumber=GuessTheNumber()
+		InputNumber=GetInput("Guess a number between 1 to 100")
+		
+		while true:
+				if(not isNumberBetweenOneToHundred(InputNumber)):
+				InputNumber=GetInput("This number is not in between 1 to 100")
+				continue
+			
+			InputNumber=int(InputNumber)
+			if(not isGuessed(InputNumber,RandomNumber)):
+				print("Guessed number is not matched try again")
+				InputNumber=GetInput("Guess a number between 1 to 100")
+				continue
+			else:
+				break;
+	def main():
+		isGuessingNumber()
+		main()
 
 ===============================================================================================================================================================
 
@@ -36,71 +51,84 @@ Assignment 2 : Find the floor of the expected value(mean) of the subarray from L
 using System;
 using System.Numerics;
 class MyClass {
-    static void Main(string[] args) {
-       var NQ = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
-            var array = Array.ConvertAll(Console.ReadLine().Split(' '), long.Parse);
-            long[] sumarr = new long[NQ[0] + 1];
-            sumarr[0] = 0;
-            for (int i = 1; i <= NQ[0]; i++)
-            {
-                sumarr[i] = sumarr[i - 1] + arr[i - 1];
-            }
-            for (var x = 0; x < NQ[1]; x++)
-            {
-                var RL = Array.ConvertAll(Console.ReadLine().Split(' '), int.
-                Console.writeLine((long)((long)(sumarr[RL[1]] - sumarr[RL[0] - 1]) / (RL[1] - RL[0] + 1)));
-            }
-    }
-}
+		private int[] GenerateArray(){
+		 var array = array.ConvertAll(Console.ReadLine().Split(''),int.parse);
+		 return array;
+		}
+		private long[] createsubArray(int ArrayLength, int[] arr){
+		 long[] sumarr = new long[ArrayLength+1];
+		 sumarr[0] = 0;
+		 for(int i=1; i<ArrayLength; i++)
+		 {
+		  sumarr[i] = sumarr[i+1]+arr[i-1];
+		 }
+		 return sumarr;
+		}
+		private  void FindMeanForAllQueries(int NoOfQueries, long[] sumarr){
+		for(var x=0; x<NoOfQueries; x++)
+		{
+			var RightLeftArray = array.ConvertAll(Console.ReadLine().Split(''),int.parse);
+			var right = RightLeftArray[1];
+			var left = RightLeftArray[0];
+			Console.WriteLine((long)(long)(sumarr[right]-sumarr[left-1])/(right-left+1));
+		}
+		}
+	Static void main(string[] agrs){
+		MyClass class = new MyClass();
+		var arr = class.GenerateArray();
+		int ArrayLength = arr[0];
+		int NoOfQueries = arr[1];
+		var InputArray = class.GenerateArray();
+		var sumArray =  class.CreateSubArray(ArrayLength,InputArray);
+		class.FindMeanForAllQueries(NoOfQueries,sumArray);
+	}
 
 ===========================================================================================================================================================
  
 Assignment 3 :
 
-public
-
-
-class CustomerSearch
+public class CustomerSearch
     {
     public List <Customer> searchByCountry(String country)
+        {
+         varquery = SELECT c.CustomerID 
+                    FROM c in 
+
+        return query.ToList();
+    }
+// Search customer by companyname
+    public List <Customer> searchByCompanyName(string company)
     {
-     varquery = SELECT c.CustomerID 
-                FROM c in 
+        var query = SELECT orderby c.CustomerID ascending 
+                    FROM c in db.customers
+                    where c.Country.Contains(company)
+                    orderby c.CustomerID ascending;
 
-return query.ToList();
-}
-companyname
-public
-List <Customer> searchByCompanyName(string company)
-{
-var query = select orderby c.CustomerID ascending 
-            from c in db.customers
-            where c.Country.Contains(company)
-            orderby c.CustomerID ascending;
+        return query.ToList();
+    }
 
-return query.ToList();
-}
+// Search customer by contact person
+    public List <Customer> searchByContact(string contact)
+    {
+        var query = SELECT c.CustomerID
+                    FROM c in db.customers
+					where c.Country.Contains(contact)
+					orderby c.CustomerID ascending
+					select c;
+                    
+        return query.ToList();
+    }
 
-// Search
-public List <Customer> searchByContact(string contact)
-{
-var query = SELECT c.CustomerId
-
-return query.ToList();
-
-}
-
-public string exportToCSV(List <Customer> customerList)
-{
-StringBuilder stringBuilder = new StringBuilder();
-
-foreach(var custmer in customerList)
-{
-stringBuilder.AppendFormat("{0},{1}, {2}, {3}", custmer.CustomerID, custmer.CompanyName, customer.ContactName, customer.Country);
-stringBuilder.AppendLine();
-}
-return stringBuilder.ToString();
-}
+    public string exportToCSV(List <Customer> customerList)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        foreach(var custmer in customerList)
+        {
+            stringBuilder.AppendFormat("{0},{1}, {2}, {3}", custmer.CustomerID, custmer.CompanyName, customer.ContactName, customer.Country);
+            stringBuilder.AppendLine();
+        }
+        return stringBuilder.ToString();
+     }
 } 
 
 ======================================================================================================================================================
@@ -108,74 +136,26 @@ return stringBuilder.ToString();
 
 Assignment 4: 
 
-// Does this Book class follow SRP? (YES) 
+// Does this Book class follow SRP?
 
-class Book {
- 
-    function getTitle() {
-        return "A Great Book";
-    }
- 
-    function getAuthor() {
-        return "John Doe";
-    }
- 
-    function turnPage() {
-        // pointer to next page
-    }
- 
-    function getCurrentPage() {
-        return "current page content";
-    }
- 
-    function getLocation() {
-        // returns the position in the library
-        // ie. shelf number & room number
-    }
-
-    function save() {
-        $filename = '/documents/'. $this->getTitle(). ' - ' . $this->getAuthor();
-        file_put_contents($filename, serialize($this));
-    }
-}
-
-interface Printer {
- 
-    function printPage($page);
-}
- 
-class PlainTextPrinter implements Printer {
- 
-    function printPage($page) {
-        echo $page;
-    }
- 
-}
- 
-class HtmlPrinter implements Printer {
- 
-    function printPage($page) {
-        echo '<div style="single-page">' . $page . '</div>';
-    }
-}
+Yes, It follows Single Responsibility Principle (SRP)
 
 ============================================================================================================================================================
 
 Assignment 5:
 
 
-Class
-Employee
-{
-int id;
-string name;
-string department;
-bool: working;
-
-public: 
-saveEmployeeTODatabase();
-printEmployeeDetailReportXML();
-printEmployeeDetailReportCSV();
-terminateEmployee();
-IsWorking();
+Class Employee{
+    int id;
+	string name;
+	string department;
+	bool: working
+	
+	public:
+		saveEmployeeTODatabase()
+		printEmployeeDetailReportXML()
+		printEmployeeDetailReportCSV()
+		terminateEmployee()
+		bool isWorking()
+}; 
 
